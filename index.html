@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gif Gif Gif</title>
+</head>
+<body>
+    <h1>Get your GIFs here!! Hot, Juicy GIFs!!</h1>
+    <button gif theme = "The Simpsons">The Simpsons</button>
+    <button gif theme = "Loony Toons">The Looney Toons</button>
+    <button gif theme = "optical Illusions">Optical Illusions</button>
+    <div id = "images">
+            </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+$("button").on("click", function() {
+
+    let gif = $(this).attr("gif theme");
+    
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q" + gif + "&api_key=YVqRnCM39d3Blg2PGuabdWO90q8eNvgU&limit=5";
+
+    $.ajax({
+  url: queryURL,
+  method: "GET"
+})
+
+  // After the data from the AJAX request comes back
+  .then(function(response) {
+
+    for (i=0;i<response.data.length;i++) {
+
+    // Saving the image_original_url property
+    var imageUrl = response.data[i].images.fixed_height.url;
+
+    // Creating and storing an image tag
+    var gifImage = $("<img>");
+
+    // Setting the gifImage src attribute to imageUrl
+    gifImage.attr("src", imageUrl);
+    gifImage.attr("alt", "broken image");
+
+    // Prepending the gifImage to the images div
+    $("#images").prepend(gifImage);
+}
+  })
+
+})
+    </script>
+</body>
+</html>
